@@ -1,14 +1,17 @@
 import './style.css';
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header>
       <h1>Logo</h1>
       <ul>
-        <li>
-          <a href='/#'>info</a>
+        <li className={props.myPage === 'home' ? 'active' : ''}>
+          <a href='/#'>home</a>
         </li>
-        <li>
+        <li className={props.myPage === 'about' ? 'active' : ''}>
+          <a href='/#'>about</a>
+        </li>
+        <li className={props.myPage === 'contact' ? 'active' : ''}>
           <a href='/#'>contact</a>
         </li>
       </ul>
