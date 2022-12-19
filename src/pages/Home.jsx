@@ -1,73 +1,38 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Button from '../components/Button';
-import Card from '../components/Card';
 import Container from '../components/Container';
+import ToggleButton from '../components/ToggleButton';
+// import Typography from '../components/Typography'; // the shape of import as default
+import * as Typography from '../components/Typography'; // import all as Typography when you want to use one component you use dot notation
+import { H2 } from '../components/Typography'; // imported as export const shape
+import Counter from '../components/Counter';
 
 class HomePage extends React.Component {
+  state = {
+    isMounted: true,
+  };
   render() {
     return (
       <div>
         <Header myPage='home' />
-        <Container>
+        <Container className='my-container'>
           <h2>Home Page</h2>
         </Container>
         <section>
           <Container>
-            <h3>Section 1</h3>
-            <Button title='click me' isActive={true} />
+            {/* <h3>Section 1</h3> */}
+            {/* <ToggleButton /> */}
+            {/* <H2>my text</H2> */}
+            {this.state.isMounted ? <Counter /> : ''}
           </Container>
-        </section>
-        <section>
-          <Container>
-            <h3>Section 2</h3>
-            <Button title='add new' />
-            <Button />
-          </Container>
-        </section>
-        <section>
-          <Container>
-            <h3>Section 3</h3>
-            <Card
-              title='Card 1'
-              body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sed molestias reiciendis, pariatur aspernatur doloremque illum eaque porro rerum rem vero voluptatibus quae quidem quisquam provident facere iusto voluptas cupiditate.'
-              imgSrc='https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg'
-            />
-            <Card
-              title='Card 2'
-              body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sed molestias reiciendis, pariatur aspernatur doloremque illum eaque porro rerum rem vero voluptatibus quae quidem quisquam provident facere iusto voluptas cupiditate.'
-              imgSrc='https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg'
-            />
-            <Card
-              title='Card 3'
-              body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sed molestias reiciendis, pariatur aspernatur doloremque illum eaque porro rerum rem vero voluptatibus quae quidem quisquam provident facere iusto voluptas cupiditate.'
-              imgSrc='https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg'
-            />
-          </Container>
-        </section>
-
-        <section>
-          <Container>
-            <h3>Section 4</h3>
-            <Card
-              title='Card 1'
-              body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sed molestias reiciendis, pariatur aspernatur doloremque illum eaque porro rerum rem vero voluptatibus quae quidem quisquam provident facere iusto voluptas cupiditate.'
-              imgSrc='https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg'
-              actions={<Button title='action button' />}
-            >
-              <h3>Section 1</h3>
-              <Button title='click me' isActive={true} />
-            </Card>
-            <Card
-              title='Card 1'
-              body='Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sed molestias reiciendis, pariatur aspernatur doloremque illum eaque porro rerum rem vero voluptatibus quae quidem quisquam provident facere iusto voluptas cupiditate.'
-              imgSrc='https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg'
-              actions={<Button title='action button' />}
-            >
-              <h3>Section 3</h3>
-            </Card>
-          </Container>
+          <button
+            onClick={() => {
+              this.setState({ isMounted: false });
+            }}
+          >
+            click me
+          </button>
         </section>
 
         <Footer />

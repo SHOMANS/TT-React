@@ -1,0 +1,10 @@
+.toggleButton {
+  padding: 10px;
+  background-color: black;
+  color: white;
+}
+
+.toggleButton.dark {
+  background-color: white;
+  color: black;
+}
