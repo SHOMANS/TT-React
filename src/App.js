@@ -1,9 +1,9 @@
-import HomePage from './pages/Home';
+import Counters from './pages/Counters';
 
 function App() {
   return (
     <div className='App'>
-      <HomePage />
+      <Counters />
     </div>
   );
 }
