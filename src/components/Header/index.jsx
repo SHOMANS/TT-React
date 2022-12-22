@@ -15,6 +15,7 @@ const Header = (props) => {
           <a href='/#'>contact</a>
         </li>
       </ul>
+      {props.myAction}
     </header>
   );
 };
