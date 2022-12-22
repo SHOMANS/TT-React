@@ -53,7 +53,7 @@ export default class Counters extends Component {
         {this.state.counters.map((item) => (
           // <Counter key={item.id} count={item.count} id={item.id} steps={item.steps} />
           // <Counter key={item.id} item={item} /> // passing as an object
-          <Counter key={item.id} {...item} onIncrement={this.onIncrement} newThis={this} /> // same as the first one
+          <Counter key={item.id} {...item} onIncrement={this.onIncrement} parentSetState={(e) => this.setState(e)} /> // same as the first one
         ))}
 
         <h1>{this.state.total}</h1>

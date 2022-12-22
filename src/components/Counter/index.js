@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 class Counter extends Component {
   decrement = () => {
-    const { steps, id, newThis } = this.props;
+    const { steps, id, parentSetState } = this.props;
 
-    newThis.setState((prevState) => {
+    parentSetState((prevState) => {
       // newThis is a props from the parent component and its value is its this
       return {
         counters: prevState.counters.map((item) => {
