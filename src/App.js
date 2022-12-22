@@ -1,9 +1,12 @@
-import Counters from './pages/Counters';
+import Form from './pages/Form';
+import Container from './components/Container';
 
 function App() {
   return (
     <div className='App'>
-      <Counters />
+      <Container>
+        <Form />
+      </Container>
     </div>
   );
 }
