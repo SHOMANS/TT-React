@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { boolean, object, ref, string } from 'yup';
+
+// const regularExpression = /^(?=.*[0-9])([a-z]){6,16}$/;
+const regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
 const initialData = {
   name: 'Abdo',
@@ -20,39 +24,34 @@ export default class Form extends Component {
     myData: initialData,
   };
 
+  schema = object().shape({
+    name: string().min(6, 'Name Should be more than 8').max(16).required(),
+    email: string().email().required(),
+    password: string().min(8).matches(regularExpression).required(),
+    rePassword: string()
+      .oneOf([ref('password'), null])
+      .required(),
+    inChecked: boolean().oneOf([true]).required(),
+  });
+
   handleRandomValues = () => {
     this.setState((prevState) => ({ name: prevState.myData.name, email: prevState.myData.email, password: prevState.myData.password }));
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Submit', this.state);
-    this.setState((prevState) => ({ myData: { name: prevState.name, email: prevState.email, password: prevState.password }, ...defaults }));
+
+    this.schema
+      .validate({ name: 'moh', email: 'moh@mog.com', password: '123', rePassword: '123', inChecked: true }, { abortEarly: false })
+      .then(() => {
+        console.log('valid');
+        this.setState((prevState) => ({ myData: { name: prevState.name, email: prevState.email, password: prevState.password }, ...defaults }));
+      })
+      .catch((e) => console.log(e.errors));
   };
-
-  // handleChangeName = (e) => {
-  //   console.log('name change', e.target.value);
-  //   this.setState({ name: e.target.value });
-  // };
-
-  // handleChangeEmail = (e) => {
-  //   console.log('email change', e.target.value);
-  //   this.setState({ email: e.target.value });
-  // };
-
-  // handleChangePassword = (e) => {
-  //   console.log('password change', e.target.value);
-  //   this.setState({ password: e.target.value });
-  // };
 
   handleChangeInput = (e) => {
     const { value, id } = e.target;
-
-    // const value = e.target.value;
-    // const id = e.target.id;
-
-    // console.log(value, id);
-
     this.setState({ [id]: value });
   };
 
@@ -61,21 +60,21 @@ export default class Form extends Component {
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <div>
           <label htmlFor='name'>Name </label>
-          <input required id='name' type='text' placeholder='enter name' onChange={this.handleChangeInput} value={this.state.name} />
+          <input id='name' type='text' placeholder='enter name' onChange={this.handleChangeInput} value={this.state.name} />
         </div>
 
         <br />
 
         <div>
           <label htmlFor='email'>Email </label>
-          <input required id='email' type='email' placeholder='enter email' onChange={this.handleChangeInput} value={this.state.email} />
+          <input id='email' type='email' placeholder='enter email' onChange={this.handleChangeInput} value={this.state.email} />
         </div>
 
         <br />
 
         <div>
           <label htmlFor='password'>Password </label>
-          <input required id='password' type='password' placeholder='enter password' onChange={this.handleChangeInput} value={this.state.password} />
+          <input id='password' type='password' placeholder='enter password' onChange={this.handleChangeInput} value={this.state.password} />
         </div>
 
         <br />
