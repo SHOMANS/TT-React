@@ -42,19 +42,9 @@ export default class TodoList extends Component {
     return (
       <div>
         <ul>
-          {/* {myData.map((todo, index) => (
+          {myData.map((todo, index) => (
             <ListItem todo={todo} key={todo.title} />
-            // <div key={todo.id}>{todo.title}</div>
-          ))} */}
-
-          {data.map((item) => (
-            <div key={item}>{item}</div>
           ))}
-
-          {/* <li>
-            <span>user id: {this.obj.userId}</span> | <span>id: {this.obj.id}</span> | <span>title: {this.obj.title}</span> |{' '}
-            <span>{this.obj.completed ? 'completed' : 'not completed'}</span>
-          </li> */}
         </ul>
       </div>
     );
