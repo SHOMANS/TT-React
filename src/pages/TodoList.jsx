@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ListItem from '../components/ListItem';
+import axios from 'axios';
 
 const myData = [
   {
@@ -38,14 +39,53 @@ export default class TodoList extends Component {
     completed: false,
   };
 
+  state = {
+    data: [],
+    isLoading: false,
+  };
+
+  async componentDidMount() {
+    this.setState({ isLoading: true });
+
+    // fetch('https://jsonplaceholder.typicode.com/todos')
+    //   .then((response) => response.json())
+    //   .then((json) => this.setState({ data: json }))
+    //   .catch((e) => console.log(e.message))
+
+    //   .finally(() => this.setState({ isLoading: false }));
+
+    // axios
+    //   .get('https://jsonplaceholder.typicode.com/todos')
+    //   .then(({ data }) => {
+    //     this.setState({ data });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+    //   .finally(() => {
+    //     this.setState({ isLoading: false });
+    //   });
+
+    try {
+      const { data } = await axios.get('https://jsonplaceholder.typicode.com/todos');
+      this.setState({ data, isLoading: false });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   render() {
     return (
       <div>
-        <ul>
-          {myData.map((todo, index) => (
-            <ListItem todo={todo} key={todo.title} />
-          ))}
-        </ul>
+        {this.state.isLoading ? (
+          'Loading....'
+        ) : (
+          <ul style={{ overflowX: 'auto' }}>
+            {this.state.data.map((todo, index) => (
+              <ListItem todo={todo} key={todo.title} />
+            ))}
+          </ul>
+        )}
       </div>
     );
   }

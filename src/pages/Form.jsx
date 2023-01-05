@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { Component } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { boolean, object, ref, string } from 'yup';
 
 // const regularExpression = /^(?=.*[0-9])([a-z]){6,16}$/;
@@ -22,6 +24,7 @@ export default class Form extends Component {
     email: '',
     password: '',
     myData: initialData,
+    isLoggingIn: false,
   };
 
   schema = object().shape({
@@ -38,16 +41,24 @@ export default class Form extends Component {
     this.setState((prevState) => ({ name: prevState.myData.name, email: prevState.myData.email, password: prevState.myData.password }));
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
+    // if (this.state.name === 'abdo') this.setState({ isLoggingIn: true });
 
-    this.schema
-      .validate({ name: 'moh', email: 'moh@mog.com', password: '123', rePassword: '123', inChecked: true }, { abortEarly: false })
-      .then(() => {
-        console.log('valid');
-        this.setState((prevState) => ({ myData: { name: prevState.name, email: prevState.email, password: prevState.password }, ...defaults }));
-      })
-      .catch((e) => console.log(e.errors));
+    const myData = { username: this.state.name, name: this.state.name, email: this.state.email };
+    this.setState({ isLoading: true });
+
+    try {
+      const res = await axios.post('https://jsonplaceholder.typicode.com/users', myData);
+      // console.log(res);
+      if (res) {
+        this.setState({ isLoggingIn: true });
+      }
+    } catch (e) {
+      console.log(e);
+      this.setState({ error: e.message });
+    }
+    this.setState({ isLoading: false });
   };
 
   handleChangeInput = (e) => {
@@ -58,6 +69,7 @@ export default class Form extends Component {
   render() {
     return (
       <form onSubmit={(e) => this.handleSubmit(e)}>
+        <div>{this.state.error}</div>
         <div>
           <label htmlFor='name'>Name </label>
           <input id='name' type='text' placeholder='enter name' onChange={this.handleChangeInput} value={this.state.name} />
@@ -79,10 +91,11 @@ export default class Form extends Component {
 
         <br />
 
-        <button type='submit'>Submit</button>
+        <button type='submit'>{this.state.isLoading ? 'Loading...' : 'Submit'}</button>
         <button type='button' onClick={this.handleRandomValues}>
           Random Values
         </button>
+        {this.state.isLoggingIn ? <Navigate to='/' /> : ''}
       </form>
     );
   }

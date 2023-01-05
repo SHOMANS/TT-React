@@ -7,6 +7,7 @@ import { Routes, Route, Link, useRoutes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { posts } from './mock/posts';
+import TodoDetails from './pages/TodoDetails';
 
 function App() {
   const router = useRoutes([
@@ -14,13 +15,14 @@ function App() {
     { path: '/form', element: <Form /> },
     { path: '/counters', element: <Counters /> },
     { path: '/todo', element: <TodoList /> },
+    { path: '/todo/:id', element: <TodoDetails /> },
     { path: '/new', element: <h1>New Page</h1> },
     {
       path: '/posts',
       element: (
         <ul>
           {posts.map((item) => (
-            <li>
+            <li key={item.id}>
               <Link to={`/posts/${item.id}`}>Post {item.id}</Link>
             </li>
           ))}

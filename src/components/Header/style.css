@@ -20,4 +20,6 @@ li a {
 
 .active {
   border-bottom: 2px solid black;
+  color: aqua;
+  background-color: blue;
 }

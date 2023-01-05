@@ -1,5 +1,5 @@
 import './style.css';
-import { Link } from 'react-router-dom';
+import { NavL, NavLink } from 'react-router-dom';
 
 const Header = (props) => {
   return (
@@ -7,27 +7,31 @@ const Header = (props) => {
       <h1>Logo</h1>
       <ul>
         <li>
-          <Link to='/'>home</Link>
+          <NavLink style={({ isActive }) => (isActive ? { color: 'red' } : {})} to='/'>
+            home
+          </NavLink>
         </li>
 
         <li>
-          <Link to='/counters'>counters</Link>
+          <NavLink to='/counters'>{({ isActive }) => (isActive ? 'active counters' : 'counters')}</NavLink>
         </li>
 
         <li>
-          <Link to='/todo'>todo</Link>
+          <NavLink className={({ isActive }) => (isActive ? 'counters-active' : '')} to='/todo'>
+            todo
+          </NavLink>
         </li>
 
         <li>
-          <Link to='/form'>form</Link>
+          <NavLink to='/form'>form</NavLink>
         </li>
 
         <li>
-          <Link to='/new'>new</Link>
+          <NavLink to='/new'>new</NavLink>
         </li>
 
         <li>
-          <Link to='/posts'>posts</Link>
+          <NavLink to='/posts'>posts</NavLink>
         </li>
       </ul>
       {props.myAction}
