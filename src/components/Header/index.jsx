@@ -1,42 +1,35 @@
 import './style.css';
-import { NavL, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import React from 'react';
 
-const Header = (props) => {
-  return (
-    <header>
-      <h1>Logo</h1>
-      <ul>
-        <li>
-          <NavLink style={({ isActive }) => (isActive ? { color: 'red' } : {})} to='/'>
-            home
-          </NavLink>
-        </li>
+class Header extends React.Component {
+  state = { username: '' };
+  componentDidMount() {
+    const username = localStorage.getItem('username');
+    this.setState({ username });
+  }
+  render() {
+    return (
+      <header>
+        <h1>Logo</h1>
+        <p>Hello {this.state.username}</p>
+        <ul>
+          <li>
+            <NavLink to='/dashboard/'>home</NavLink>
+          </li>
 
-        <li>
-          <NavLink to='/counters'>{({ isActive }) => (isActive ? 'active counters' : 'counters')}</NavLink>
-        </li>
+          <li>
+            <NavLink to='/dashboard/info'>Info</NavLink>
+          </li>
 
-        <li>
-          <NavLink className={({ isActive }) => (isActive ? 'counters-active' : '')} to='/todo'>
-            todo
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to='/form'>form</NavLink>
-        </li>
-
-        <li>
-          <NavLink to='/new'>new</NavLink>
-        </li>
-
-        <li>
-          <NavLink to='/posts'>posts</NavLink>
-        </li>
-      </ul>
-      {props.myAction}
-    </header>
-  );
-};
+          <li>
+            <button onClick={this.props.logout}>logout</button>
+          </li>
+        </ul>
+        {this.props.myAction}
+      </header>
+    );
+  }
+}
 
 export default Header;

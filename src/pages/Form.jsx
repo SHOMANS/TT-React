@@ -1,40 +1,22 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { boolean, object, ref, string } from 'yup';
+// import { Navigate } from 'react-router-dom';
+import { object, string } from 'yup';
 
 // const regularExpression = /^(?=.*[0-9])([a-z]){6,16}$/;
-const regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-
-const initialData = {
-  name: 'Abdo',
-  email: 'Abdo@gsg.com',
-  password: 'abdo123',
-};
-
-const defaults = {
-  name: '',
-  email: '',
-  password: '',
-};
 
 export default class Form extends Component {
   state = {
-    name: '',
     email: '',
     password: '',
-    myData: initialData,
-    isLoggingIn: false,
+    // isLoggingIn: false, // no longer used
+    isLoading: false,
+    errors: [],
   };
 
   schema = object().shape({
-    name: string().min(6, 'Name Should be more than 8').max(16).required(),
-    email: string().email().required(),
-    password: string().min(8).matches(regularExpression).required(),
-    rePassword: string()
-      .oneOf([ref('password'), null])
-      .required(),
-    inChecked: boolean().oneOf([true]).required(),
+    email: string().required(),
+    password: string().required(),
   });
 
   handleRandomValues = () => {
@@ -43,22 +25,34 @@ export default class Form extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    // if (this.state.name === 'abdo') this.setState({ isLoggingIn: true });
 
-    const myData = { username: this.state.name, name: this.state.name, email: this.state.email };
     this.setState({ isLoading: true });
+    this.schema
+      .validate({ email: this.state.email, password: this.state.password }, { abortEarly: false })
+      .then(async ({ email, password }) => {
+        console.log(email, password);
+        const res = await axios.post('https://dummyjson.com/auth/login', {
+          username: email,
+          password,
+        });
 
-    try {
-      const res = await axios.post('https://jsonplaceholder.typicode.com/users', myData);
-      // console.log(res);
-      if (res) {
-        this.setState({ isLoggingIn: true });
-      }
-    } catch (e) {
-      console.log(e);
-      this.setState({ error: e.message });
-    }
-    this.setState({ isLoading: false });
+        // console.log(res.data);
+        // console.log(res.data.token);
+
+        if (res) {
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('username', res.data.username);
+          this.props.login();
+        }
+      })
+      .catch((error) => {
+        if (error.errors) {
+          this.setState({ errors: error.errors });
+        } else {
+          this.setState({ errors: [error.message] });
+        }
+      })
+      .finally(() => this.setState({ isLoading: false }));
   };
 
   handleChangeInput = (e) => {
@@ -69,17 +63,17 @@ export default class Form extends Component {
   render() {
     return (
       <form onSubmit={(e) => this.handleSubmit(e)}>
-        <div>{this.state.error}</div>
         <div>
-          <label htmlFor='name'>Name </label>
-          <input id='name' type='text' placeholder='enter name' onChange={this.handleChangeInput} value={this.state.name} />
+          {this.state.errors.map((error) => (
+            <span style={{ color: 'red' }}>{error}</span>
+          ))}
         </div>
 
         <br />
 
         <div>
           <label htmlFor='email'>Email </label>
-          <input id='email' type='email' placeholder='enter email' onChange={this.handleChangeInput} value={this.state.email} />
+          <input id='email' type='text' placeholder='enter email' onChange={this.handleChangeInput} value={this.state.email} />
         </div>
 
         <br />
@@ -92,10 +86,8 @@ export default class Form extends Component {
         <br />
 
         <button type='submit'>{this.state.isLoading ? 'Loading...' : 'Submit'}</button>
-        <button type='button' onClick={this.handleRandomValues}>
-          Random Values
-        </button>
-        {this.state.isLoggingIn ? <Navigate to='/' /> : ''}
+
+        {/* {this.state.isLoggingIn ? <Navigate to='/' /> : ''} no longer useful */}
       </form>
     );
   }
