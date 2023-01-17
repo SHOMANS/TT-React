@@ -8,8 +8,6 @@ export default class ProtectedRoute extends Component {
       <div>
         {this.props.isAuthorized ? (
           <>
-            <Header myPage='home' logout={this.props.logout} />
-
             <Outlet />
           </>
         ) : (

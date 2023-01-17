@@ -1,68 +1,35 @@
-import Form from './pages/Form';
 import Home from './pages/Home';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import Footer from './components/Footer';
-import InfoPage from './pages/Info';
-import ProtectedRoute from './components/ProtectedRoute';
+import Header from './components/Header';
 import React from 'react';
+import Todo from './pages/Todo';
+import Slider from './pages/Slider';
+import Posts from './pages/Posts';
+import Counters from './pages/Counters';
+import Todos from './pages/Todos';
+import Gifs from './pages/Gifs';
 
-export default class App extends React.Component {
-  state = {
-    isAuthorized: false,
-  };
+const App = () => {
+  const router = useRoutes([
+    { index: true, element: <Home title={'Home Page'} /> },
+    { path: 'todo', element: <Todo /> },
+    { path: 'gifs', element: <Gifs /> },
+    { path: 'todos', element: <Todos /> },
+    { path: 'posts', element: <Posts /> },
+    { path: 'slider', element: <Slider /> },
+    { path: 'counters', element: <Counters /> },
 
-  // const router = useRoutes([
-  //   { index: true, element: <Navigate to='/login' /> },
+    { path: '*', element: <h1>page not found 404</h1> },
+  ]); // in functional component
 
-  //   {
-  //     path: '/login',
-  //     element: <>{isAuthorized ? <Navigate to='/dashboard' /> : <Form />}</>,
-  //   },
+  return (
+    <div className='App'>
+      <Header />
+      {router}
+      <Footer />
+    </div>
+  );
+};
 
-  //   {
-  //     path: '/dashboard',
-  //     element: <ProtectedRoute isAuthorized={isAuthorized} />,
-  //     children: [
-  //       { index: true, element: <Home /> },
-  //       { path: 'info', element: <InfoPage /> },
-  //     ],
-  //   },
-
-  //   { path: '*', element: <h1>page not found 404</h1> },
-  // ]); // in functional component
-
-  componentDidMount() {
-    const token = localStorage.getItem('token');
-    if (token) this.setState({ isAuthorized: true });
-  }
-
-  login = () => this.setState({ isAuthorized: true });
-
-  logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-
-    this.setState({ isAuthorized: false });
-  };
-
-  render() {
-    return (
-      <div className='App'>
-        {/* {router} */}
-        <Routes>
-          <Route index element={<Navigate to='/login' />} />
-
-          <Route path='/login' element={<>{this.state.isAuthorized ? <Navigate to='/dashboard' /> : <Form login={this.login} />}</>} />
-
-          <Route path='/dashboard' element={<ProtectedRoute isAuthorized={this.state.isAuthorized} logout={this.logout} />}>
-            <Route index element={<Home />} />
-            <Route path='info' element={<InfoPage />} />
-          </Route>
-
-          <Route path='*' element={<h1>page not found 404</h1>} />
-        </Routes>
-        <Footer />
-      </div>
-    );
-  }
-}
+export default App;

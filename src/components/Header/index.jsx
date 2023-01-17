@@ -3,30 +3,39 @@ import { NavLink } from 'react-router-dom';
 import React from 'react';
 
 class Header extends React.Component {
-  state = { username: '' };
-  componentDidMount() {
-    const username = localStorage.getItem('username');
-    this.setState({ username });
-  }
   render() {
     return (
       <header>
         <h1>Logo</h1>
-        <p>Hello {this.state.username}</p>
         <ul>
           <li>
-            <NavLink to='/dashboard/'>home</NavLink>
+            <NavLink to='/'>home</NavLink>
           </li>
 
           <li>
-            <NavLink to='/dashboard/info'>Info</NavLink>
+            <NavLink to='/gifs'>gifs</NavLink>
           </li>
 
           <li>
-            <button onClick={this.props.logout}>logout</button>
+            <NavLink to='/counters'>counters</NavLink>
+          </li>
+
+          <li>
+            <NavLink to='/posts'>posts</NavLink>
+          </li>
+
+          <li>
+            <NavLink to='/slider'>slider</NavLink>
+          </li>
+
+          <li>
+            <NavLink to='/todos'>todos</NavLink>
+          </li>
+
+          <li>
+            <NavLink to='/todo'>todo</NavLink>
           </li>
         </ul>
-        {this.props.myAction}
       </header>
     );
   }
