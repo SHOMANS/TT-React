@@ -1,6 +1,7 @@
 import './style.css';
 import { NavLink } from 'react-router-dom';
 import React from 'react';
+import ToggleButton from '../ToggleButton';
 
 class Header extends React.Component {
   render() {
@@ -35,6 +36,7 @@ class Header extends React.Component {
           <li>
             <NavLink to='/todo'>todo</NavLink>
           </li>
+          <ToggleButton />
         </ul>
       </header>
     );
