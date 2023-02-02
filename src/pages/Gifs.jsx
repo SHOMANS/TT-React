@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import LazyImage from '../components/LazyImage';
 
 const API_KEY = 'Ura1eoVqMbKSqasQhIbVt3YPlwrx9fh5';
 // const search = 'cat';
@@ -35,7 +36,7 @@ const Gifs = () => {
         <input type='submit' />
       </form>
       {data.map((item) => (
-        <img key={item.id} src={item.images.original.url} alt={item.title} width='100px' />
+        <LazyImage {...{ item }} />
       ))}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useRoutes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
@@ -26,7 +26,7 @@ const App = () => {
           <div className='App'>
             <GlobalStyle />
             <Header />
-            {router}
+            <Suspense fallback={<div className='spinner' />}>{router}</Suspense>
             <Footer />
           </div>
         </themeContext.Provider>
