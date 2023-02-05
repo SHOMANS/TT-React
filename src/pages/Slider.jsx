@@ -14,6 +14,9 @@ const Slider = () => {
 
   return (
     <div>
+      {null.map((item) => (
+        <></>
+      ))}
       <button onClick={handlePrev}>prev</button>
       <button onClick={handleNext}>next</button>
       <img src={images[index]} alt='' />

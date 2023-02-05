@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
+import HigherOrderLayout from '../components/HigherOrderLayout';
 import usePosts from '../hooks/usePosts';
 
-const Posts = () => {
+const Posts = ({ data }) => {
   const { state, startLoading, endLoading, getAll, getOne, deleteOne, createPost, updatePost } = usePosts();
 
   useEffect(() => {
@@ -10,7 +11,7 @@ const Posts = () => {
       getAll();
       endLoading();
     }, 2000);
-  }, []); // GET METHOD (READ)
+  }, [endLoading, getAll, startLoading]); // GET METHOD (READ)
 
   // -----------------------------------------------------------------------
   // -----------------------------------------------------------------------
@@ -27,6 +28,9 @@ const Posts = () => {
   // const deletePost = (id) => {
   //   setPosts((prevState) => prevState.filter((post) => post.id !== id));
   // }; // delete (delete)
+
+  console.log('data from the wrapped component', data);
+
   return (
     <>
       <div>
@@ -57,4 +61,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default HigherOrderLayout(Posts);

@@ -17,7 +17,10 @@ const Todos = lazy(() => import('../pages/Todos'));
 const Gifs = lazy(() => import('../pages/Gifs'));
 
 export const router = [
-  { index: true, element: <Home title={'Home Page'} /> },
+  {
+    index: true,
+    element: <Home title={'Home Page'} />,
+  },
   { path: 'todo', element: <Todo /> },
   { path: 'gifs', element: <Gifs /> },
   { path: 'todos', element: <Todos /> },

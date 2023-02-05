@@ -1,8 +1,8 @@
 import { Container } from '../../global/components';
-import AuthSection from '../../components/AuthSection';
 import RefComponent from '../../components/RefComponent';
+import HigherOrderLayout from '../../components/HigherOrderLayout';
 
-export default function HomePage({ title, ...rest }) {
+export default HigherOrderLayout(function HomePage({ title, ...rest }) {
   return (
     <div>
       <Container className='my-container'>
@@ -11,4 +11,4 @@ export default function HomePage({ title, ...rest }) {
       </Container>
     </div>
   );
-}
+});
