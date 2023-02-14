@@ -12,9 +12,12 @@ import { router as routes } from './router';
 // contexts
 import { AuthContext } from './context/authContect';
 import { themeContext } from './context/themeContext';
+import { useTranslation } from 'react-i18next';
 
 const App = () => {
   const router = useRoutes(routes);
+
+  const { i18n } = useTranslation();
 
   const [isAuthorized, setIsAuthorized] = useState(true);
   const [theme, setTheme] = useState(lightTheme);
@@ -24,8 +27,9 @@ const App = () => {
       <AuthContext.Provider value={[isAuthorized, setIsAuthorized]}>
         <themeContext.Provider value={[theme, setTheme]}>
           <div className='App'>
-            <GlobalStyle />
+            <GlobalStyle dir={i18n.language === 'en' ? 'ltr' : 'rtl'} />
             <Header />
+
             <Suspense fallback={<div className='spinner' />}>{router}</Suspense>
             <Footer />
           </div>

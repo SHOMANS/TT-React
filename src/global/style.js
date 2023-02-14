@@ -11,6 +11,10 @@ section {
   margin-top: 10px;
 }
 
+html {
+  direction: ${(props) => props.dir}; // to apply the multi languages in styling
+}
+
 body {
   transition: all 0.5s;
   background-color: ${(props) => props.theme.pallet.page};
