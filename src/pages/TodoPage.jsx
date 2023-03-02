@@ -1,55 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createTodo, deleteTodo, getAllData } from '../redux/todos';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { createTodo, deleteTodo, getAllData } from '../redux/todos';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 const TodoPage = () => {
-  const [title, setTitle] = useState('');
+  // const [title, setTitle] = useState('');
 
-  const { todos, isLoading, error } = useSelector((state) => state.todos);
+  // const { todos, isLoading, error } = useSelector((state) => state.todos);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    // getAllData(dispatch); won't work without middleware
-    dispatch(getAllData());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // getAllData(dispatch); won't work without middleware
+  //   dispatch(getAllData());
+  // }, [dispatch]);
 
-  const handleDeleteTodo = (id) => {
-    dispatch(deleteTodo(id));
-  };
+  // const handleDeleteTodo = (id) => {
+  //   dispatch(deleteTodo(id));
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    dispatch(
-      createTodo({
-        title,
-        id: Math.round(Math.random() * 100),
-      })
-    );
+  //   dispatch(
+  //     createTodo({
+  //       title,
+  //       id: Math.round(Math.random() * 100),
+  //     })
+  //   );
 
-    setTitle('');
-  };
+  //   setTitle('');
+  // };
 
   return (
     <div>
-      {isLoading ? <h3>Loading...</h3> : ''}
-      {error}
-      <form onSubmit={handleSubmit}>
-        <input type='text' name='title' onChange={(e) => setTitle(e.target.value)} value={title} />
-        <button type='submit'>submit</button>
-      </form>
-      {todos.length ? (
-        todos.map((todo) => (
-          <div key={todo.id}>
-            {todo.title} <button onClick={() => handleDeleteTodo(todo.id)}>delete</button>
-          </div>
-        ))
-      ) : (
-        <h3>no todos to show</h3>
-      )}
+      <ComponentTest age={123} />
     </div>
   );
 };
 
 export default TodoPage;
+
+export const ComponentTest = ({ name }) => {
+  const [state, setState] = useState(false);
+
+  const doSth = () => {};
+
+  return (
+    <div>
+      <button onClick={() => setState(true)}>click</button>
+      {state && <h1>{name}</h1>}
+    </div>
+  );
+};
